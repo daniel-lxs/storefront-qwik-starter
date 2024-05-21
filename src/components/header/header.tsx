@@ -1,13 +1,12 @@
 import { $, component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
-import { Link } from '@builder.io/qwik-city';
+import { Link, useLocation } from '@builder.io/qwik-city';
+import { LuShoppingCart, LuUser } from '@qwikest/icons/lucide';
 import { APP_STATE, CUSTOMER_NOT_DEFINED_ID } from '~/constants';
 import { logoutMutation } from '~/providers/shop/account/account';
 import { getActiveCustomerQuery } from '~/providers/shop/customer/customer';
-import { GitHubLink } from '../GitHubLink/GitHubLink';
 import LogoutIcon from '../icons/LogoutIcon';
 import MenuIcon from '../icons/MenuIcon';
-import ShoppingBagIcon from '../icons/ShoppingBagIcon';
-import UserIcon from '../icons/UserIcon';
+
 import SearchBar from '../search-bar/SearchBar';
 
 export default component$(() => {
@@ -15,6 +14,8 @@ export default component$(() => {
 	const collections = useContext(APP_STATE).collections.filter(
 		(item) => item.parent?.name === '__root_collection__' && !!item.featuredAsset
 	);
+
+	const loc = useLocation();
 
 	const totalQuantity =
 		appState.activeOrder?.state !== 'PaymentAuthorized'
@@ -44,65 +45,34 @@ export default component$(() => {
 	});
 
 	return (
-		<div
-			class={`bg-gradient-to-r from-blue-700 to-indigo-900 transform shadow-xl sticky top-0 z-10 animate-dropIn`}
-		>
+		<div class={`bg-white transform shadow-xl sticky top-0 z-10 animate-dropIn`}>
 			<header>
-				<div class="bg-zinc-100 text-gray-600 shadow-inner text-center text-sm py-1 px-2 xl:px-0">
-					<div class="max-w-6xl mx-2 h-5 min-h-full md:mx-auto flex items-center justify-between my-1">
-						<div class="flex justify-between items-center w-full">
-							<div>
-								<p class="hidden sm:block">
-									{$localize`Exclusive: Get your own`}{' '}
-									<a
-										href="https://github.com/vendure-ecommerce/storefront-qwik-starter"
-										target="_blank"
-										class="underline"
-									>
-										{$localize`FREE storefront starter kit`}
-									</a>
-								</p>
-							</div>
-							<div class="flex mr-[60px] 2xl:mr-0">
-								<Link
-									href={appState.customer.id !== CUSTOMER_NOT_DEFINED_ID ? '/account' : '/sign-in'}
-									class="flex items-center space-x-1 pb-1 pr-2"
-								>
-									<UserIcon />
-									<span class="mt-1 text-gray-700">
-										{appState.customer.id !== CUSTOMER_NOT_DEFINED_ID
-											? $localize`My Account`
-											: $localize`Sign In`}
-									</span>
-								</Link>
-								{appState.customer.id !== CUSTOMER_NOT_DEFINED_ID && (
-									<button onClick$={logout} class="text-gray-700">
-										<div class="flex items-center cursor-pointer">
-											<span class="mr-2">{$localize`Logout`}</span>
-											<LogoutIcon />
-										</div>
-									</button>
-								)}
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="max-w-6xl mx-auto p-4 flex items-center space-x-4">
 					<button
-						class="block sm:hidden text-white"
+						class="block sm:hidden text-primary"
 						onClick$={() => (appState.showMenu = !appState.showMenu)}
 					>
 						<MenuIcon />
 					</button>
-					<h1 class="text-white w-10">
+					<h1 class="text-primary w-10">
 						<Link href="/">
-							<img src={`/cube-logo-small.webp`} width={40} height={31} alt="Vendure logo" />
+							<img src={`/logo-72-72.png`} width={40} height={31} alt="Vendure logo" />
 						</Link>
 					</h1>
 					<div class="hidden space-x-4 sm:block">
+						<Link
+							href="/"
+							class={`text-sm md:text-base hover:text-primary/80 transition-colors ${loc.url.pathname === '/' ? 'text-primary' : 'text-gray-700'}`}
+						>
+							{$localize`Home`}
+						</Link>
 						{collections.map((collection) => (
 							<Link
-								class="text-sm md:text-base text-gray-200 hover:text-white"
+								class={`text-sm md:text-base hover:text-primary/80 transition-colors ${
+									loc.url.pathname === `/collections/${collection.slug}/`
+										? 'text-primary/80'
+										: 'text-gray-700'
+								}`}
 								href={`/collections/${collection.slug}`}
 								key={collection.id}
 							>
@@ -117,10 +87,10 @@ export default component$(() => {
 						<button
 							name="Cart"
 							aria-label={`${totalQuantity} items in cart`}
-							class="relative w-9 h-9 bg-white bg-opacity-20 rounded text-white p-1"
+							class="relative w-9 h-9 hover:bg-primary/20 transition-colors rounded text-primary p-1"
 							onClick$={() => (appState.showCart = !appState.showCart)}
 						>
-							<ShoppingBagIcon />
+							<LuShoppingCart class="w-6 h-6" />
 							{totalQuantity ? (
 								<div class="absolute rounded-full -top-2 -right-2 bg-primary-600 w-6 h-6">
 									{totalQuantity}
@@ -130,8 +100,30 @@ export default component$(() => {
 							)}
 						</button>
 					</div>
+					<div class="flex mr-[60px] 2xl:mr-0 h-9">
+						<Link
+							href={appState.customer.id !== CUSTOMER_NOT_DEFINED_ID ? '/account' : '/sign-in'}
+							class={
+								'flex items-center space-x-1 py-4 px-2 rounded text-primary hover:bg-primary/20 transition-colors'
+							}
+						>
+							<LuUser class="w-6 h-6" />
+							<span class="mt-1 text-primary">
+								{appState.customer.id !== CUSTOMER_NOT_DEFINED_ID
+									? $localize`My Account`
+									: $localize`Sign In`}
+							</span>
+						</Link>
+						{appState.customer.id !== CUSTOMER_NOT_DEFINED_ID && (
+							<button onClick$={logout} class="text-gray-700">
+								<div class="flex items-center cursor-pointer">
+									<span class="mr-2">{$localize`Logout`}</span>
+									<LogoutIcon />
+								</div>
+							</button>
+						)}
+					</div>
 				</div>
-				<GitHubLink />
 			</header>
 		</div>
 	);

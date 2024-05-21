@@ -29,3 +29,5 @@ dist
 tsconfig.tsbuildinfo
 vite.config.ts
 src/generated
+postcss.config.cjs
+tailwind.config.cjs

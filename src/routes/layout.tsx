@@ -102,7 +102,7 @@ export default component$(() => {
 	);
 
 	return (
-		<div>
+		<div class="root">
 			<Header />
 			<Cart />
 			<Menu />

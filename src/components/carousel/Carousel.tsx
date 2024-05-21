@@ -51,29 +51,29 @@ export default component$<{ items: CarouselItem[] }>(({ items }) => {
 
 	return (
 		<div
-			class="relative h-[600px] overflow-hidden"
+			class="relative overflow-hidden"
 			onMouseEnter$={handleMouseEnter}
 			onMouseLeave$={handleMouseLeave}
 		>
 			<div
-				class="carousel h-full flex transition-transform duration-500 ease-in-out"
+				class="carousel flex transition-transform duration-500 ease-in-out"
 				style={{ transform: `translateX(-${currentIndex.value * 100}%)` }}
 			>
 				{items.map((item, index) => (
-					<div key={index} class="w-full h-full relative flex-none">
+					<div key={index} class="w-full relative flex-none">
 						<Image
 							layout="fullWidth"
-							class="h-full w-full object-cover"
+							class="h-[400px] md:h-[500px] w-full object-cover"
 							src={item.imageUrl}
 							height="600"
 							width="800"
 						/>
-						<div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start text-white py-8 px-40">
-							<h2 class="text-5xl font-medium mb-4">{item.title}</h2>
-							<p class="text-white text-xl mb-10">{item.content}</p>
+						<div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start text-white py-8 px-6 sm:px-20 md:px-40">
+							<h2 class="text-2xl md:text-3xl lg:text-5xl font-medium mb-4">{item.title}</h2>
+							<p class="text-lg md:text-xl mb-10">{item.content}</p>
 							<a
 								href={item.link}
-								class="inline-block px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition-colors"
+								class="inline-block px-6 py-3 sm:px-4 sm:py-2 bg-primary text-white rounded hover:bg-primary/80 transition-colors text-md sm:text-base"
 							>
 								{item.buttonCaption}
 							</a>
@@ -85,24 +85,22 @@ export default component$<{ items: CarouselItem[] }>(({ items }) => {
 				{items.map((_, index) => (
 					<button
 						key={index}
-						class={`w-3 h-3 rounded-full ${
-							index === currentIndex.value ? 'bg-white' : 'bg-gray-400 hover:bg-gray-300'
-						}`}
+						class={`w-4 sm:w-3 h-4 sm:h-3 rounded-full ${index === currentIndex.value ? 'bg-white' : 'bg-gray-400 hover:bg-gray-300'}`}
 						onClick$={$(() => goToSlide(index))}
 					/>
 				))}
 			</div>
 			<button
-				class="absolute left-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-4 rounded-full hover:bg-white/20 transition-colors"
+				class="hidden sm:block sm:absolute left-4 sm:left-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-2 sm:p-4 rounded-full hover:bg-white/20 transition-colors"
 				onClick$={goToPrev}
 			>
-				<LuChevronLeft class="w-6 h-6" />
+				<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
 			</button>
 			<button
-				class="absolute right-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-4 rounded-full hover:bg-white/20 transition-colors"
+				class="hidden sm:block sm:absolute right-4 sm:right-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-2 sm:p-4 rounded-full hover:bg-white/20 transition-colors"
 				onClick$={goToNext}
 			>
-				<LuChevronRight class="w-6 h-6" />
+				<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
 			</button>
 		</div>
 	);

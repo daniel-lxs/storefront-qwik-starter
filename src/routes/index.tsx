@@ -31,6 +31,7 @@ export default component$(() => {
 			</div>
 
 			<CardGallery
+				title={$localize`Our Work`}
 				items={collections.map((c) => {
 					return {
 						title: c.name,

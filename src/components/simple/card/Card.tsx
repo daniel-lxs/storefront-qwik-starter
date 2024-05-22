@@ -7,7 +7,7 @@ type Props = {
 export default component$<Props>(({ extraClass = '' }) => {
 	return (
 		<div
-			class={`bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 w-full space-y-8 lg:w-auto ${extraClass}`}
+			class={`bg-white py-8 px-6 shadow-lg sm:rounded-lg sm:px-12 w-full space-y-8 lg:w-auto ${extraClass}`}
 		>
 			<Slot />
 		</div>

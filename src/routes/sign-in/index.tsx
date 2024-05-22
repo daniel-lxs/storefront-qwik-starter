@@ -1,6 +1,8 @@
 import { $, component$, useSignal } from '@builder.io/qwik';
 import { Link, useNavigate } from '@builder.io/qwik-city';
 import XCircleIcon from '~/components/icons/XCircleIcon';
+import Checkbox from '~/components/simple/checkbox/Checkbox';
+import Input from '~/components/simple/input/Input';
 import { loginMutation } from '~/providers/shop/account/account';
 
 export default component$(() => {
@@ -43,45 +45,31 @@ export default component$(() => {
 					</div>
 					<div class="space-y-6">
 						<div>
-							<label class="block text-sm font-medium text-gray-700">Email address</label>
-							<div class="mt-1">
-								<input
-									type="email"
-									autoComplete="email"
-									value={email.value}
-									required
-									onInput$={(_, el) => (email.value = el.value)}
-									class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-								/>
-							</div>
+							<Input
+								label="Email address"
+								type="email"
+								value={email.value}
+								onChange$={(_, el) => (email.value = el.value)}
+							/>
 						</div>
 
 						<div>
-							<label class="block text-sm font-medium text-gray-700">Password</label>
-							<div class="mt-1">
-								<input
-									type="password"
-									value={password.value}
-									required
-									onInput$={(_, el) => (password.value = el.value)}
-									onKeyUp$={(ev, el) => {
-										if (ev.key === 'Enter' && !!el.value) {
-											login();
-										}
-									}}
-									class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-								/>
-							</div>
+							<Input
+								type="password"
+								label="Password"
+								value={password.value}
+								onChange$={(_, el) => (password.value = el.value)}
+								onKeyUp$={(ev, el) => {
+									if (ev.key === 'Enter' && !!el.value) {
+										login();
+									}
+								}}
+							/>
 						</div>
 
 						<div class="flex items-center justify-between">
 							<div class="flex items-center">
-								<input
-									type="checkbox"
-									checked
-									onChange$={(_, el) => (rememberMe.value = el.checked)}
-									class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-								/>
+								<Checkbox type="checkbox" onChange$={(_, el) => (rememberMe.value = el.checked)} />
 								<label class="ml-2 block text-sm text-gray-900">Remember me</label>
 							</div>
 

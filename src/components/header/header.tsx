@@ -71,11 +71,11 @@ export default component$(() => {
 						{collections.map((collection) => (
 							<Link
 								class={`text-sm md:text-base hover:text-primary/80 transition-colors ${
-									loc.url.pathname === `/collections/${collection.slug}/`
+									loc.url.pathname === `/shop/collections/${collection.slug}/`
 										? 'text-primary/80'
 										: 'text-gray-700'
 								}`}
-								href={`/collections/${collection.slug}`}
+								href={`/shop/collections/${collection.slug}`}
 								key={collection.id}
 							>
 								{collection.name}

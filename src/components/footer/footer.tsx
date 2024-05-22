@@ -36,7 +36,7 @@ export default component$(() => {
 										<li key={collection.id}>
 											<Link
 												class="text-base text-gray-500 hover:text-gray-600"
-												href={`/collections/${collection.slug}`}
+												href={`/shop/collections/${collection.slug}`}
 												key={collection.id}
 											>
 												{collection.name}

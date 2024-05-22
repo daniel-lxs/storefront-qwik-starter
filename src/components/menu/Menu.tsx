@@ -35,7 +35,7 @@ export default component$(() => {
 											{collections.map((collection) => (
 												<a
 													class="text-lg font-medium text-gray-90 hover:text-gray-500 pt-4"
-													href={`/collections/${collection.slug}`}
+													href={`/shop/collections/${collection.slug}`}
 													key={collection.id}
 												>
 													{collection.name}

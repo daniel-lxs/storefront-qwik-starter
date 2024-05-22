@@ -1,6 +1,7 @@
 import { component$, useContext } from '@builder.io/qwik';
 import CardGallery from '~/components/card-gallery/CardGallery';
 import CollectionCard from '~/components/collection-card/CollectionCard';
+import Hero from '~/components/hero/Hero';
 import Slides, { Slide } from '~/components/slides/Slides';
 import { APP_STATE, HOMEPAGE_IMAGE } from '~/constants';
 
@@ -36,10 +37,20 @@ export default component$(() => {
 					return {
 						title: c.name,
 						imageUrl: c.featuredAsset?.preview || '',
-						link: `/collections/${c.slug}`,
+						link: `/shop/collections/${c.slug}`,
 					};
 				})}
 			/>
+
+			<div class="relative h-[600px]">
+				<Hero
+					{...slides[0]}
+					buttonCaption1="More info"
+					link1="/"
+					buttonCaption2="Request a quote"
+					link2="/"
+				/>
+			</div>
 
 			<section class="pt-12 xl:max-w-7xl xl:mx-auto xl:px-8">
 				<div class="mt-4 flow-root">

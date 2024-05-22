@@ -22,7 +22,7 @@ export default component$<{ items: { name: string; slug: string; id: string }[] 
 							<div class="flex items-center">
 								<SlashIcon />
 								<Link
-									href={`/collections/${item.slug}`}
+									href={`/shop/collections/${item.slug}`}
 									class="ml-2 md:ml-4 text-xs md:text-sm font-medium text-gray-500 hover:text-gray-700"
 								>
 									{item.name}

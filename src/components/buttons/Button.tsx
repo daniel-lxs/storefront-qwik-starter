@@ -9,7 +9,7 @@ export const Button = component$<Props>(({ extraClass = '', onClick$ }) => {
 	return (
 		<button
 			type="button"
-			class={`flex items-center justify-around bg-gray-100 border rounded-md py-2 px-4 text-base font-medium text-black hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-gray-800 ${extraClass}`}
+			class={`inline-block px-6 py-3 w-full sm:w-auto sm:px-8 sm:py-2 bg-primary text-white rounded hover:bg-primary/80 transition-colors text-md sm:text-base ${extraClass}`}
 			onClick$={$(async () => {
 				onClick$ && onClick$();
 			})}

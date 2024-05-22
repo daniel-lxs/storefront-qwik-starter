@@ -90,18 +90,29 @@ export default component$<{ items: Slide[] }>(({ items }) => {
 					/>
 				))}
 			</div>
-			<button
-				class="hidden sm:block sm:absolute left-4 sm:left-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-2 sm:p-4 rounded-full hover:bg-white/20 transition-colors"
-				onClick$={goToPrev}
+			<div
+				class={{
+					'opacity-0 transition-opacity duration-500 ease-in-out': true,
+					'opacity-100': isMouseOver.value,
+				}}
 			>
-				<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
-			</button>
-			<button
-				class="hidden sm:block sm:absolute right-4 sm:right-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-2 sm:p-4 rounded-full hover:bg-white/20 transition-colors"
-				onClick$={goToNext}
-			>
-				<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
-			</button>
+				{isMouseOver.value && (
+					<>
+						<button
+							class="hidden sm:block sm:absolute left-4 sm:left-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-2 sm:p-4 rounded-full hover:bg-white/20 transition-colors"
+							onClick$={goToPrev}
+						>
+							<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
+						</button>
+						<button
+							class="hidden sm:block sm:absolute right-4 sm:right-10 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-2 sm:p-4 rounded-full hover:bg-white/20 transition-colors"
+							onClick$={goToNext}
+						>
+							<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
+						</button>
+					</>
+				)}
+			</div>
 		</div>
 	);
 });

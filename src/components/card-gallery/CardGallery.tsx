@@ -31,7 +31,7 @@ export default component$(({ title, items }: CardGalleryProps) => {
 		const container = scrollContainer.value;
 		if (container) {
 			container.addEventListener('scroll', updateButtonVisibility);
-			updateButtonVisibility(); // Initial check
+			updateButtonVisibility();
 
 			return () => {
 				container.removeEventListener('scroll', updateButtonVisibility);
@@ -52,7 +52,7 @@ export default component$(({ title, items }: CardGalleryProps) => {
 	});
 
 	return (
-		<div class="relative space-y-2 pt-6">
+		<div class="relative space-y-2 py-6">
 			<div class="sm:px-4 lg:px-6">
 				<h2 class="text-2xl font-light tracking-tight text-gray-900">{title}</h2>
 			</div>
@@ -60,7 +60,7 @@ export default component$(({ title, items }: CardGalleryProps) => {
 				{showLeftButton.value && (
 					<button
 						onClick$={scrollLeft}
-						class="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-4 rounded-full z-10"
+						class="absolute left-4 sm:left-6 top-1/2 -translate-y-5 transform bg-primary/85 text-white p-4 rounded-full z-10"
 					>
 						<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
 					</button>
@@ -89,7 +89,7 @@ export default component$(({ title, items }: CardGalleryProps) => {
 				{showRightButton.value && (
 					<button
 						onClick$={scrollRight}
-						class="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-4 rounded-full z-10"
+						class="absolute right-4 sm:right-6 top-1/2 -translate-y-5 transform bg-primary/85 text-white p-4 rounded-full z-10"
 					>
 						<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
 					</button>

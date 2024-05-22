@@ -2,7 +2,7 @@ import { $, component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
 import { LuChevronLeft, LuChevronRight } from '@qwikest/icons/lucide';
 import { Image } from 'qwik-image';
 
-export type CarouselItem = {
+export type Slide = {
 	title: string;
 	content: string;
 	imageUrl: string;
@@ -10,7 +10,7 @@ export type CarouselItem = {
 	buttonCaption: string;
 };
 
-export default component$<{ items: CarouselItem[] }>(({ items }) => {
+export default component$<{ items: Slide[] }>(({ items }) => {
 	const currentIndex = useSignal(0);
 	const isMouseOver = useSignal(false);
 	const intervalId = useSignal<number | null>(null);

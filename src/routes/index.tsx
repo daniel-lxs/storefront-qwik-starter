@@ -1,12 +1,13 @@
 import { component$, useContext } from '@builder.io/qwik';
-import Carousel, { CarouselItem } from '~/components/carousel/Carousel';
+import CardGallery from '~/components/card-gallery/CardGallery';
 import CollectionCard from '~/components/collection-card/CollectionCard';
+import Slides, { Slide } from '~/components/slides/Slides';
 import { APP_STATE, HOMEPAGE_IMAGE } from '~/constants';
 
 export default component$(() => {
 	const collections = useContext(APP_STATE).collections;
 
-	const carouselItems: CarouselItem[] = [
+	const slides: Slide[] = [
 		{
 			title: 'Who are we and what do we do?',
 			content: 'We are an experienced team of wood workers and craftsmen.',
@@ -26,8 +27,18 @@ export default component$(() => {
 	return (
 		<div>
 			<div class="relative h-[600px]">
-				<Carousel items={carouselItems} />
+				<Slides items={slides} />
 			</div>
+
+			<CardGallery
+				items={collections.map((c) => {
+					return {
+						title: c.name,
+						imageUrl: c.featuredAsset?.preview || '',
+						link: `/collections/${c.slug}`,
+					};
+				})}
+			/>
 
 			<section class="pt-12 xl:max-w-7xl xl:mx-auto xl:px-8">
 				<div class="mt-4 flow-root">
@@ -36,6 +47,7 @@ export default component$(() => {
 							<div class="sm:px-6 lg:px-8 xl:px-0 pb-4">
 								<h2 class="text-2xl font-light tracking-tight text-gray-900">{$localize`Shop by Category`}</h2>
 							</div>
+
 							<div class="grid justify-items-center grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-8 sm:px-6 lg:px-8 xl:relative xl:px-0 xl:space-x-0 xl:gap-x-8">
 								{collections.map((collection) =>
 									collection.featuredAsset ? (

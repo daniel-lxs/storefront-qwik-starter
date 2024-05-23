@@ -36,6 +36,23 @@ export default component$(() => {
 				};
 			}
 		}
+
+		const handleScroll = () => {
+			const header = document.querySelector('.header');
+			if (window.scrollY > 50) {
+				header?.classList.add('bg-white/90', 'shadow-lg', 'text-gray-700');
+				header?.classList.remove('text-white');
+			} else {
+				header?.classList.remove('bg-white/90', 'shadow-lg', 'text-gray-700');
+				header?.classList.add('text-white');
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
 	});
 
 	const logout = $(async () => {
@@ -45,17 +62,17 @@ export default component$(() => {
 	});
 
 	return (
-		<div class="bg-white transform shadow-xl sticky top-0 z-10 animate-dropIn">
+		<div class="header bg-transparent fixed top-0 w-full z-10 transition-all duration-300 text-white">
 			<header>
-				<div class="max-w-6xl mx-auto p-4 flex items-center justify-center space-x-12 sm:space-x-8 ">
+				<div class="max-w-6xl mx-auto p-4 flex items-center justify-center space-x-12 sm:space-x-8">
 					<div class="flex justify-center space-x-6">
 						<button
-							class="block sm:hidden text-primary"
+							class="block sm:hidden text-current"
 							onClick$={() => (appState.showMenu = !appState.showMenu)}
 						>
 							<MenuIcon />
 						</button>
-						<h1 class="text-primary w-10">
+						<h1 class="w-10">
 							<Link href="/">
 								<img src={`/logo-72-72.png`} width={40} height={31} alt="Vendure logo" />
 							</Link>
@@ -64,16 +81,16 @@ export default component$(() => {
 					<div class="hidden space-x-4 sm:block">
 						<Link
 							href="/"
-							class={`text-sm md:text-base hover:text-primary/80 transition-colors ${loc.url.pathname === '/' ? 'text-primary' : 'text-gray-700'}`}
+							class={`text-sm md:text-base hover:text-primary/80 transition-colors duration-100 ${loc.url.pathname === '/' ? 'text-current' : 'text-current'}`}
 						>
 							{$localize`Home`}
 						</Link>
 						{collections.map((collection) => (
 							<Link
-								class={`text-sm md:text-base hover:text-primary/80 transition-colors ${
+								class={`text-sm md:text-base hover:text-primary/80 transition-colors duration-100 ${
 									loc.url.pathname === `/shop/collections/${collection.slug}/`
-										? 'text-primary/80'
-										: 'text-gray-700'
+										? 'text-current'
+										: 'text-current'
 								}`}
 								href={`/shop/collections/${collection.slug}`}
 								key={collection.id}
@@ -92,7 +109,7 @@ export default component$(() => {
 							<button
 								name="Cart"
 								aria-label={`${totalQuantity} items in cart`}
-								class="relative w-9 h-9 hover:bg-primary/20 transition-colors rounded text-primary p-1"
+								class="relative w-9 h-9 hover:bg-primary/20 transition-colors  duration-100 rounded text-current p-1"
 								onClick$={() => (appState.showCart = !appState.showCart)}
 							>
 								<LuShoppingCart class="w-6 h-6" />
@@ -109,18 +126,18 @@ export default component$(() => {
 							<Link
 								href={appState.customer.id !== CUSTOMER_NOT_DEFINED_ID ? '/account' : '/sign-in'}
 								class={
-									'flex items-center space-x-1 py-4 px-2 rounded text-primary hover:bg-primary/20 transition-colors'
+									'flex items-center space-x-1 py-4 px-2 rounded text-current hover:bg-primary/20 transition-colors duration-100'
 								}
 							>
 								<LuUser class="w-6 h-6" />
-								<span class="mt-1 text-primary">
+								<span class="mt-1 text-current">
 									{appState.customer.id !== CUSTOMER_NOT_DEFINED_ID
 										? $localize`My Account`
 										: $localize`Sign In`}
 								</span>
 							</Link>
 							{appState.customer.id !== CUSTOMER_NOT_DEFINED_ID && (
-								<button onClick$={logout} class="text-gray-700">
+								<button onClick$={logout} class="text-current">
 									<div class="flex items-center cursor-pointer">
 										<span class="mr-2">{$localize`Logout`}</span>
 										<LogoutIcon />

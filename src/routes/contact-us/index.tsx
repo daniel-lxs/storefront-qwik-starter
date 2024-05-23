@@ -37,7 +37,7 @@ export default component$(() => {
 						</Card>
 
 						<Card extraClass="mt-4 lg:mt-0 lg:w-1/3">
-							<div class="space-y-4">
+							<div class="space-y-2 sm:space-y-4">
 								<div>
 									<h3 class="text-lg font-medium text-gray-900">{$localize`Our Address`}</h3>
 									<p class="text-sm text-gray-600">

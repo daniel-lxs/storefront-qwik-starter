@@ -7,8 +7,12 @@ import {
 	useStore,
 	useVisibleTask$,
 } from '@builder.io/qwik';
-import { RequestHandler, routeLoader$ } from '@builder.io/qwik-city';
+import { RequestHandler, routeLoader$, useLocation } from '@builder.io/qwik-city';
 import { ImageTransformerProps, useImageProvider } from 'qwik-image';
+import Cart from '~/components/cart/Cart';
+import Footer from '~/components/footer/footer';
+import Header from '~/components/header/Header';
+import HomeHeader from '~/components/home-header/HomeHeader';
 import Menu from '~/components/menu/Menu';
 import { APP_STATE, CUSTOMER_NOT_DEFINED_ID, IMAGE_RESOLUTIONS } from '~/constants';
 import { Order } from '~/generated/graphql';
@@ -17,9 +21,6 @@ import { getCollections } from '~/providers/shop/collections/collections';
 import { getActiveOrderQuery } from '~/providers/shop/orders/order';
 import { ActiveCustomer, AppState } from '~/types';
 import { extractLang } from '~/utils/i18n';
-import Cart from '../components/cart/Cart';
-import Footer from '../components/footer/footer';
-import Header from '../components/header/header';
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
 	cacheControl({ staleWhileRevalidate: 60 * 60 * 24 * 7, maxAge: 5 });
@@ -47,6 +48,8 @@ export default component$(() => {
 		imageTransformer$,
 		resolutions: IMAGE_RESOLUTIONS,
 	});
+
+	const loc = useLocation();
 
 	const collectionsSignal = useCollectionsLoader();
 	const availableCountriesSignal = useAvailableCountriesLoader();
@@ -103,7 +106,7 @@ export default component$(() => {
 
 	return (
 		<div class="root">
-			<Header />
+			{loc.url.pathname === '/' ? <HomeHeader /> : <Header />}
 			<Cart />
 			<Menu />
 			<main class="pb-12 bg-gray-50">

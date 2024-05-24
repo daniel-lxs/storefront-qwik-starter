@@ -45,7 +45,7 @@ export default component$(() => {
 	});
 
 	return (
-		<div class="bg-white transform shadow-xl sticky top-0 z-10 animate-dropIn">
+		<div class="bg-white transform shadow-xl sticky top-0 z-20 animate-dropIn">
 			<header>
 				<div class="max-w-6xl mx-auto p-4 flex items-center justify-center space-x-12 sm:space-x-8 ">
 					<div class="flex justify-center space-x-6">

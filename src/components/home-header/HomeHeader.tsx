@@ -69,10 +69,10 @@ export default component$(() => {
 
 	return (
 		<div
-			class={`header bg-transparent fixed top-0 w-full z-10 transition-all duration-300 text-white`}
+			class={`header bg-transparent fixed top-0 w-full z-20 transition-all duration-300 text-white`}
 		>
 			<header>
-				<div class="max-w-6xl mx-auto p-4 flex items-center justify-center space-x-12 sm:space-x-8">
+				<div class="max-w-6xl mx-auto p-2 sm:p-4 flex items-center justify-center space-x-12 sm:space-x-8">
 					<div class="flex justify-center space-x-6">
 						<button
 							class="block sm:hidden text-current"

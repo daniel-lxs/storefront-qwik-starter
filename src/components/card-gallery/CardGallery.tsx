@@ -52,33 +52,34 @@ export default component$(({ title, items }: CardGalleryProps) => {
 	});
 
 	return (
-		<div class="relative space-y-2 py-6">
-			<div class="sm:px-4 lg:px-6">
+		<div class="relative space-y-2 py-10 sm:py-20">
+			<div class="px-4 lg:px-6">
 				<h2 class="text-2xl font-light tracking-tight text-gray-900">{title}</h2>
 			</div>
-			<div>
+			<div class="relative">
 				{showLeftButton.value && (
 					<button
 						onClick$={scrollLeft}
-						class="absolute left-4 sm:left-6 top-1/2 -translate-y-5 transform bg-primary/85 text-white p-4 rounded-full z-10"
+						class="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 bg-primary/85 text-white p-4 rounded-full z-10"
 					>
 						<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
 					</button>
 				)}
-				<div ref={scrollContainer} class="flex overflow-x-auto space-x-4 p-4">
+				<div ref={scrollContainer} class="flex overflow-x-auto space-x-2 sm:space-x-4 p-4">
 					{items.map((item, index) => (
-						<Link href={item.link} key={index} class="flex-shrink-0 max-w-[300px]">
+						<Link href={item.link} key={index} class="flex-shrink-0 max-w-[200px] sm:max-w-[300px]">
 							<div class="relative rounded-lg overflow-hidden hover:opacity-75 mx-auto">
-								<div class="w-full h-full object-center object-cover">
+								<div class="w-full h-auto overflow-hidden max-w-[200px] sm:max-w-[300px] max-h-[200px] sm:max-h-[300px]">
 									<Image
-										layout="fixed"
-										width="300"
-										height="300"
 										src={item.imageUrl}
 										alt={item.title}
+										class="object-cover object-center w-full h-auto"
+										width={300}
+										height={300}
+										layout="fixed"
 									/>
 								</div>
-								<span class="absolute w-full bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50" />
+								<div class="absolute w-full bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50" />
 								<span class="absolute w-full bottom-2 mt-auto text-center text-xl font-bold text-white">
 									{item.title}
 								</span>
@@ -89,7 +90,7 @@ export default component$(({ title, items }: CardGalleryProps) => {
 				{showRightButton.value && (
 					<button
 						onClick$={scrollRight}
-						class="absolute right-4 sm:right-6 top-1/2 -translate-y-5 transform bg-primary/85 text-white p-4 rounded-full z-10"
+						class="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 bg-primary/85 text-white p-4 rounded-full"
 					>
 						<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
 					</button>

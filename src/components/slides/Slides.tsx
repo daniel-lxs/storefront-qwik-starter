@@ -60,7 +60,7 @@ export default component$<{ items: Slide[] }>(({ items }) => {
 				style={{ transform: `translateX(-${currentIndex.value * 100}%)` }}
 			>
 				{items.map((item, index) => (
-					<div key={index} class="w-full relative flex-none">
+					<div key={index} class="w-full relative flex-none max-h-[500px] sm:max-h-[600px]">
 						<Image
 							layout="fullWidth"
 							class="h-[400px] md:h-[500px] w-full object-cover"

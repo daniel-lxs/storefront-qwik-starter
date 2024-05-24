@@ -27,7 +27,7 @@ export default component$(() => {
 
 	return (
 		<div>
-			<div class="relative h-[600px]">
+			<div class="relative">
 				<Slides items={slides} />
 			</div>
 
@@ -45,6 +45,7 @@ export default component$(() => {
 			<div class="relative h-[600px]">
 				<Hero
 					{...slides[0]}
+					content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					buttonCaption1="More info"
 					link1="/"
 					buttonCaption2="Request a quote"

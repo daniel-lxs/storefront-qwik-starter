@@ -1,8 +1,8 @@
 import { component$, useContext } from '@builder.io/qwik';
-import CardGallery from '~/components/card-gallery/CardGallery';
 import CollectionCard from '~/components/collection-card/CollectionCard';
 import Hero from '~/components/hero/Hero';
 import Slides, { Slide } from '~/components/slides/Slides';
+import Swiper from '~/components/swiper/Swiper';
 import { APP_STATE, HOMEPAGE_IMAGE } from '~/constants';
 
 export default component$(() => {
@@ -31,7 +31,7 @@ export default component$(() => {
 				<Slides items={slides} />
 			</div>
 
-			<CardGallery
+			<Swiper
 				title={$localize`Our Work`}
 				items={collections.map((c) => {
 					return {

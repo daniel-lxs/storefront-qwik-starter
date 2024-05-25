@@ -37,6 +37,8 @@ export const Head = component$(() => {
 
 			<meta name="description" content="Vendure Qwik Storefront" />
 
+			<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+
 			<Insights publicApiKey={ENV_VARIABLES.VITE_QWIK_INSIGHTS_KEY} />
 		</head>
 	);

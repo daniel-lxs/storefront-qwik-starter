@@ -22,7 +22,7 @@ export default component$<{
 				/>
 				<div class="absolute inset-0 flex flex-col bg-black bg-opacity-50 justify-center items-start text-white py-8 px-6 sm:px-20 md:px-40">
 					<h2 class="text-2xl md:text-3xl lg:text-5xl font-medium mb-4">{title}</h2>
-					<p class="text-lg md:text-xl mb-10">{content}</p>
+					<p class="text-lg md:text-xl mb-10 sm:w-1/2">{content}</p>
 					<div class="flex space-x-4">
 						<a
 							href={link1}

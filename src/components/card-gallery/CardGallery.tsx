@@ -16,60 +16,60 @@ export type Item = {
 
 export default component$(({ title, items }: CardGalleryProps) => {
 	const scrollContainer = useSignal<HTMLDivElement>();
-	const showLeftButton = useSignal<boolean>(false);
-	const showRightButton = useSignal<boolean>(true);
-
-	const updateButtonVisibility = $(() => {
-		if (scrollContainer.value) {
-			const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.value;
-			showLeftButton.value = scrollLeft > 0;
-			showRightButton.value = scrollLeft < scrollWidth - clientWidth;
-		}
-	});
+	const itemWidth = useSignal(300 + 16); // if mobile it should be 200 + 16
+	const containerWidth = useSignal<number>(0);
+	const translateX = useSignal<number>(0);
 
 	useVisibleTask$(() => {
-		const container = scrollContainer.value;
-		if (container) {
-			container.addEventListener('scroll', updateButtonVisibility);
-			updateButtonVisibility();
-
-			return () => {
-				container.removeEventListener('scroll', updateButtonVisibility);
-			};
+		const isMobile = window.innerWidth < 640;
+		itemWidth.value = isMobile ? 200 + 8 : 300 + 16;
+		if (scrollContainer.value) {
+			containerWidth.value = scrollContainer.value.offsetWidth;
+			translateX.value = 0;
 		}
 	});
 
-	const scrollLeft = $(() => {
+	const handleScrollLeft = $(() => {
 		if (scrollContainer.value) {
-			scrollContainer.value.scrollBy({ left: -400, behavior: 'smooth' });
+			translateX.value += itemWidth.value;
+			if (translateX.value > 0) {
+				translateX.value = 0;
+			}
+			scrollContainer.value.style.transform = `translate3d(${translateX.value}px, 0, 0)`;
 		}
 	});
 
-	const scrollRight = $(() => {
+	const handleScrollRight = $(() => {
 		if (scrollContainer.value) {
-			scrollContainer.value.scrollBy({ left: 400, behavior: 'smooth' });
+			const maxTranslateX = -(scrollContainer.value.scrollWidth - containerWidth.value);
+			translateX.value -= itemWidth.value;
+			if (translateX.value < maxTranslateX) {
+				translateX.value = maxTranslateX;
+			}
+			scrollContainer.value.style.transform = `translate3d(${translateX.value}px, 0, 0)`;
 		}
 	});
 
 	return (
-		<div class="relative space-y-2 py-10 sm:py-20">
-			<div class="px-4 lg:px-6">
+		<div class="relative space-y-2 py-10 sm:py-16">
+			<div class="flex justify-center items-center px-2 sm:px-4 lg:px-6 space-x-2 sm:space-x-4">
+				<button onClick$={() => handleScrollLeft()} class="text-black p-4 rounded-full">
+					<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
+				</button>
 				<h2 class="text-2xl font-light tracking-tight text-gray-900">{title}</h2>
+				<button onClick$={() => handleScrollRight()} class="text-black p-4 rounded-full">
+					<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
+				</button>
 			</div>
-			<div class="relative">
-				{showLeftButton.value && (
-					<button
-						onClick$={scrollLeft}
-						class="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 bg-primary/85 text-white p-4 rounded-full z-10"
-					>
-						<LuChevronLeft class="w-4 sm:w-6 h-4 sm:h-6" />
-					</button>
-				)}
-				<div ref={scrollContainer} class="flex overflow-x-auto space-x-2 sm:space-x-4 p-4">
+			<div class="relative overflow-hidden">
+				<div
+					ref={scrollContainer}
+					class="flex space-x-2 sm:space-x-4 p-2 sm:p-4 transition-transform duration-300"
+				>
 					{items.map((item, index) => (
 						<Link href={item.link} key={index} class="flex-shrink-0 max-w-[200px] sm:max-w-[300px]">
 							<div class="relative rounded-lg overflow-hidden hover:opacity-75 mx-auto">
-								<div class="w-full h-auto overflow-hidden max-w-[200px] sm:max-w-[300px] max-h-[200px] sm:max-h-[300px]">
+								<div class="w-full h-auto overflow-hidden max-w-[200px] sm:max-w-[300px]">
 									<Image
 										src={item.imageUrl}
 										alt={item.title}
@@ -87,14 +87,6 @@ export default component$(({ title, items }: CardGalleryProps) => {
 						</Link>
 					))}
 				</div>
-				{showRightButton.value && (
-					<button
-						onClick$={scrollRight}
-						class="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 bg-primary/85 text-white p-4 rounded-full"
-					>
-						<LuChevronRight class="w-4 sm:w-6 h-4 sm:h-6" />
-					</button>
-				)}
 			</div>
 		</div>
 	);

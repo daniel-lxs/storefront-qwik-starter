@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add this CSS to your global styles or within a <style> tag in your component */
+.scrollbar-none::-webkit-scrollbar {
+	display: none;
+}
+
+.scrollbar-none {
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
+}
+
 @layer base {
 	:root {
 		--primary: 24.7 82.4% 49.8%;
@@ -11,7 +23,6 @@
 		--secondary: 29.1 85.7% 59.6%;
 		/* sea-buckthorn-400 */
 		--secondary-foreground: 16.9 92.9% 13.3%;
-		/* sea-buckthorn-950 */
 		--accent: 34.4 90.9% 93.5%;
 		/* sea-buckthorn-100 */
 		--accent-foreground: 15.1 71.8% 28.6%;

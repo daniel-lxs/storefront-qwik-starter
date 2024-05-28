@@ -15,11 +15,11 @@ import { Button } from '~/components/buttons/Button';
 export default component$(() => {
 	const mainImageUrl = useSignal('/homepage.png');
 	const maingImageOpacity = useSignal('opacity-100');
-	const spaceBetween = useSignal(30);
+	const spaceBetween = useSignal(20);
 
 	useVisibleTask$(() => {
 		const isMobile = window.innerWidth < 640;
-		spaceBetween.value = isMobile ? 20 : 30;
+		spaceBetween.value = isMobile ? 10 : 20;
 		const handlePrevClick = () => {
 			const swiperEl = document.querySelector('swiper-container');
 			(swiperEl as any)?.swiper.slidePrev();
@@ -132,11 +132,11 @@ export default component$(() => {
 						alt="Project Image"
 						class={`w-full h-auto object-cover rounded-lg shadow-lg transition-opacity duration-300 ease-in-out ${maingImageOpacity.value}`}
 						layout="fixed"
-						height={800}
+						height={800 /*TODO: MAKE RESPONSIVE ON MOBILE!!!*/}
 						width={1400}
 					/>
 					{/* Media Slider */}
-					<div class="w-full max-w-7xl mt-8 flex justify-center py-2">
+					<div class="w-full max-w-7xl mt-4 flex justify-center py-2">
 						<div class="flex justify-center items-center space-x-2 sm:space-x-4 py-2">
 							<button class="prev-button" aria-label="Previous">
 								<LuChevronLeft class="w-6 sm:w-8 h-6 sm:h-8" />

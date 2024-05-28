@@ -11,6 +11,7 @@ functions/**/*.js
 # Development
 node_modules
 .pnpm-store
+*.code-workspace
 
 # Cache
 .cache

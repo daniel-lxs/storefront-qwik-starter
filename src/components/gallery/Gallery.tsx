@@ -1,5 +1,5 @@
 import { component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
-import { LuChevronLeft, LuChevronRight } from '@qwikest/icons/lucide';
+import { LuChevronLeft, LuChevronRight, LuX } from '@qwikest/icons/lucide';
 import { Image } from 'qwik-image';
 
 type Props = {
@@ -13,17 +13,22 @@ type Entry = {
 	link: string;
 };
 
-export default component$<Props>((props: Props) => {
+export default component$<Props>(({ entries }: Props) => {
 	const spaceBetween = useSignal(20);
 	const activeSlide = useSignal(0);
+	const isMobile = useSignal(false);
+	const isFullScreen = useSignal(false);
 
 	useVisibleTask$(() => {
 		const secondarySwiperEl = document.querySelector(
 			'swiper-container.secondary-swiper'
 		) as HTMLElement;
 		const mainSwiperEl = document.querySelector('swiper-container.main-swiper') as HTMLElement;
-		const isMobile = window.innerWidth < 640;
-		spaceBetween.value = isMobile ? 10 : 20;
+
+		isMobile.value =
+			navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i) !== null;
+
+		spaceBetween.value = isMobile.value ? 10 : 20;
 
 		const handlePrevClick = () => {
 			(secondarySwiperEl as any)?.swiper.slidePrev();
@@ -58,17 +63,24 @@ export default component$<Props>((props: Props) => {
 	return (
 		<>
 			<div class="relative">
-				<swiper-container class="main-swiper" slides-per-view="1">
-					{props.entries.map((entry, index) => (
-						<swiper-slide key={index}>
+				<swiper-container
+					class={`main-swiper ${isMobile.value ? '' : 'swiper-no-swiping'}`}
+					slides-per-view="1"
+				>
+					{entries.map((entry, index) => (
+						<swiper-slide key={index} lazy="true">
 							<div class="animate-pulse bg-slate-300 absolute inset-0"></div>
 							<Image
 								src={entry.imageUrl}
 								alt="Project Image"
 								class="w-full h-auto object-cover rounded-lg shadow-lg relative z-10 max-h-[300px] sm:max-h-[800px]"
 								layout="fixed"
-								height={800 /* TODO: MAKE RESPONSIVE ON MOBILE!!! */}
+								height={800}
 								width={1400}
+								loading="lazy"
+								onClick$={() => {
+									isFullScreen.value = true;
+								}}
 							/>
 						</swiper-slide>
 					))}
@@ -89,7 +101,7 @@ export default component$<Props>((props: Props) => {
 					slides-per-view="auto"
 					centered-slides="true"
 				>
-					{props.entries.map((entry, index) => (
+					{entries.map((entry, index) => (
 						<swiper-slide
 							key={index}
 							class={`flex max-w-[50px] sm:max-w-[100px] ${
@@ -122,6 +134,66 @@ export default component$<Props>((props: Props) => {
 					<LuChevronRight class="w-6 sm:w-8 h-6 sm:h-8" />
 				</button>
 			</div>
+
+			{/* Modal */}
+			{isFullScreen.value && (
+				<div class="fixed inset-0 bg-black bg-opacity-75 z-40 flex items-center justify-center">
+					<div class="absolute top-4 right-4 z-50">
+						<button
+							aria-label="Close"
+							class="text-white text-3xl"
+							onClick$={() => (isFullScreen.value = false)}
+						>
+							<LuX class="w-6 sm:w-10 h-6 sm:h-10" />
+						</button>
+					</div>
+					<div class="flex items-center justify-between w-full max-w-screen-xl px-4">
+						<button
+							class="text-white text-3xl absolute left-6 f-prev-button z-50"
+							aria-label="Previous Slide"
+							onClick$={() => {
+								const secondarySwiperEl = document.querySelector(
+									'swiper-container.secondary-swiper'
+								) as HTMLElement;
+								(secondarySwiperEl as any)?.swiper.slidePrev();
+							}}
+						>
+							<LuChevronLeft class="w-6 sm:w-10 h-6 sm:h-10" />
+						</button>
+						<div class="w-full h-auto max-h-full flex items-center justify-center">
+							<Image
+								src={entries[activeSlide.value].imageUrl}
+								alt="Project Image"
+								class="max-w-full max-h-full object-cover rounded-lg shadow-lg cursor-zoom-in transform transition-transform duration-300 ease-in-out"
+								layout="fullWidth"
+								loading="lazy"
+								onClick$={(e) => {
+									const img = e.target as HTMLElement;
+									if (img.classList.contains('zoomed')) {
+										img.classList.remove('zoomed');
+										img.style.transform = 'scale(1)';
+									} else {
+										img.classList.add('zoomed');
+										img.style.transform = 'scale(1.5)';
+									}
+								}}
+							/>
+						</div>
+						<button
+							class="text-white text-3xl absolute right-6 f-next-button z-50"
+							aria-label="Next Slide"
+							onClick$={() => {
+								const secondarySwiperEl = document.querySelector(
+									'swiper-container.secondary-swiper'
+								) as HTMLElement;
+								(secondarySwiperEl as any)?.swiper.slideNext();
+							}}
+						>
+							<LuChevronRight class="w-6 sm:w-10 h-6 sm:h-10" />
+						</button>
+					</div>
+				</div>
+			)}
 		</>
 	);
 });
